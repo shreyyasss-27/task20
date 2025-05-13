@@ -2,12 +2,16 @@ name: CI Pipeline
 on:
   push:
     branches: [ main ]
+permissions:
+  contents: write  # Grant write access to repository contents
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}  # Use GITHUB_TOKEN for checkout
     - name: Set up Node.js
       uses: actions/setup-node@v3
       with:
