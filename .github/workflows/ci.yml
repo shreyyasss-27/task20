@@ -19,3 +19,11 @@ jobs:
     - name: Save build logs
       run: |
         echo "Build completed at $(date)" >> build.log
+        mv build.log logs/build-$(date +%F-%H-%M-%S).log
+    - name: Commit build logs
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add logs/
+        git commit -m "Add build log" || echo "No changes to commit"
+        git push
